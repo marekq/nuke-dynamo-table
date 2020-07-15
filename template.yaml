@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Delete all data in a DynamoDB table
+
+Parameters:
+  ddbtable:
+    Type: String
+    Description: Name of the existing DynamoDB table to delete data from
+    Default: ''
+  
+  ddbprimarykey:
+    Type: String
+    Description: The primary partition key of the DynamoDB table
+    Default: ''
+
+  ddbsecondarykey:
+    Type: String
+    Description: The secondary partition key of the DynamoDB table (leave blank if not used)
+    Default: ''
+
+Resources:
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: python3.8
+      CodeUri: lambda/
+      Description: Delete all data in a DynamoDB table
+      MemorySize: 256
+      Timeout: 10
+      Tracing: Active  
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ddbtable
+      Environment:
+        Variables:
+          ddbtable: !Ref ddbtable
+          ddb_primary_key: !Ref ddbprimarykey
+          ddb_secondary_key: !Ref ddbsecondarykey
