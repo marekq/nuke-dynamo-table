@@ -27,7 +27,7 @@ Resources:
       CodeUri: lambda/
       Description: Delete all data in a DynamoDB table
       MemorySize: 256
-      Timeout: 10
+      Timeout: 30
       Tracing: Active  
       Policies:
         - DynamoDBCrudPolicy:

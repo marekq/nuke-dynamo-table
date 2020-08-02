@@ -1,2 +1,2 @@
-sam build
+sam build -u
 sam deploy
